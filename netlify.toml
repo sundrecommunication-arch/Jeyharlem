@@ -1,0 +1,29 @@
+# Netlify hosts the React frontend (client/) as a static build. The Express API/admin/
+# checkout/uploads backend (server/) is NOT something Netlify can run persistently — see
+# the deployment guide for why — so it needs to live on a separate Node host (Render,
+# Railway, Fly.io, or your own VPS). These redirects make that backend look like it's part
+# of this same site to the browser: replace YOUR-BACKEND-URL below with that host's real
+# URL once it's deployed (see Part 2 of the guide), then redeploy Netlify.
+
+[build]
+  base = "client"
+  command = "npm install && npm run build"
+  publish = "client/dist"
+
+[[redirects]]
+  from = "/api/*"
+  to = "https://YOUR-BACKEND-URL/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/uploads/*"
+  to = "https://YOUR-BACKEND-URL/uploads/:splat"
+  status = 200
+  force = true
+
+# React Router — let the app handle every other route client-side.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

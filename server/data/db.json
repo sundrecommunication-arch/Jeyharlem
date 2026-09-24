@@ -1,0 +1,754 @@
+{
+  "products": [
+    {
+      "id": "wig-tammy",
+      "name": "Wig Tammy",
+      "price": 300,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266033029-1f2b2y.jpg",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 300,
+          "image": "/uploads/1790266033361-b2ajd8.jpg"
+        }
+      ],
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "wig-steffy",
+      "name": "Wig Steffy",
+      "price": 260,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266033621-ltdedi.jpg",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 260,
+          "image": "/uploads/1790266033826-d8hblf.jpg"
+        }
+      ],
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "wig-eve",
+      "name": "Wig Eve",
+      "price": 750,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266034236-hgqoe5.jpg",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 750,
+          "image": "/uploads/1790266034458-mcotl2.jpg"
+        }
+      ],
+      "tags": [
+        "new",
+        "bestseller"
+      ]
+    },
+    {
+      "id": "24-dark-burgundy-straight-unit",
+      "name": "24” Dark burgundy Straight unit",
+      "price": 550,
+      "oldPrice": null,
+      "badge": "",
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266104131-n16r3h.jpeg",
+      "variants": [],
+      "tags": []
+    },
+    {
+      "id": "wig-anni",
+      "name": "WIG ANNI",
+      "price": 250,
+      "oldPrice": null,
+      "badge": "",
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266113736-og4ktp.jpeg",
+      "variants": [],
+      "tags": []
+    },
+    {
+      "id": "lady-talata-bob-unit",
+      "name": "LADY TALATA BOB UNIT",
+      "price": 155,
+      "oldPrice": 250,
+      "badge": "Sale",
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266036732-4th2x8.jpg",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 155,
+          "image": "/uploads/1790266036957-5pr42j.jpg"
+        }
+      ],
+      "tags": [
+        "new",
+        "bob",
+        "bestseller"
+      ]
+    },
+    {
+      "id": "miss-t-unit",
+      "name": "Miss T unit",
+      "price": 330,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266037207-8ozy5u.jpg",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 330,
+          "image": "/uploads/1790266037397-97ian2.jpg"
+        }
+      ],
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "flexi-fringe",
+      "name": "Flexi fringe",
+      "price": 165,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266037772-rfaaak.jpg",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 165,
+          "image": "/uploads/1790266038057-son1hv.jpg"
+        }
+      ],
+      "tags": [
+        "new",
+        "fringe"
+      ]
+    },
+    {
+      "id": "tilda-luxury-unit",
+      "name": "TILDA LUXURY UNIT",
+      "price": 450,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266038328-7t5tty.jpg",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 450,
+          "image": "/uploads/1790266038642-4n6my8.jpg"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "id": "maame-unit",
+      "name": "MAAME UNIT",
+      "price": 320,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266038875-viaymy.jpg",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 320,
+          "image": "/uploads/1790266039038-j13mhh.jpg"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "id": "wig-dionne",
+      "name": "Wig Dionne",
+      "price": 250,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266039256-i42u55.jpg",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 250,
+          "image": "/uploads/1790266039483-8weseb.jpg"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "id": "rose-bob-unit",
+      "name": "Rose Bob unit",
+      "price": 165,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266039724-43vja4.jpg",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 165,
+          "image": "/uploads/1790266039966-4j3zmi.jpg"
+        }
+      ],
+      "tags": [
+        "bob"
+      ]
+    },
+    {
+      "id": "24-inches-honey-brown-donor-hair",
+      "name": "24 inches honey brown Donor hair",
+      "price": 550,
+      "oldPrice": 740,
+      "badge": "Sale",
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266040257-efxdnw.jpg",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 550,
+          "image": "/uploads/1790266040480-y8jidt.jpg"
+        }
+      ],
+      "tags": [
+        "donor-unit"
+      ]
+    },
+    {
+      "id": "selly-fringe-hair",
+      "name": "SELLY FRINGE HAIR",
+      "price": 525,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266040750-cjj9s5.jpg",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 525,
+          "image": "/uploads/1790266040966-p5hut3.jpg"
+        }
+      ],
+      "tags": [
+        "fringe"
+      ]
+    },
+    {
+      "id": "ako-unit",
+      "name": "AKO UNIT",
+      "price": 460,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266041428-oju4l0.jpg",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 460,
+          "image": "/uploads/1790266042337-5uahfi.jpg"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "id": "nikky-unit",
+      "name": "Nikky Unit",
+      "price": 360,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266043048-9r2wjb.jpg",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 360,
+          "image": "/uploads/1790266043543-vpdqp8.jpg"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "id": "cilla-unit",
+      "name": "CILLA UNIT",
+      "price": 600,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266044032-k5xv5t.jpg",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 600,
+          "image": "/uploads/1790266044451-fjtn3y.jpg"
+        }
+      ],
+      "tags": [
+        "bestseller"
+      ]
+    },
+    {
+      "id": "aisosa-t-unit",
+      "name": "Aisosa T unit",
+      "price": 250,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266044794-zpy5xl.jpg",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 250,
+          "image": "/uploads/1790266045091-dz1aai.jpg"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "id": "8-inches-kim-k-raw-donor-inches-bob-wig",
+      "name": "8 inches Kim K Raw donor inches bob wig",
+      "price": 150,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266045515-3u63o5.jpg",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 150,
+          "image": "/uploads/1790266045788-5zgz0w.jpg"
+        }
+      ],
+      "tags": [
+        "donor-unit",
+        "bob"
+      ]
+    },
+    {
+      "id": "12-inches-2-6-luxury-bone-straight",
+      "name": "12 inches 2/6 Luxury Bone straight",
+      "price": 200,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266047989-ofwtpp.png",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 200,
+          "image": "/uploads/1790266049541-wmcvo1.png"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "id": "obaa-single-donor-honey-brown-unit",
+      "name": "Obaa Single donor honey brown Unit",
+      "price": 380,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266049990-ykyo5b.jpg",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 380,
+          "image": "/uploads/1790266050499-2h87tw.jpg"
+        }
+      ],
+      "tags": [
+        "donor-unit"
+      ]
+    },
+    {
+      "id": "donor-unit-luxury-straight-wig",
+      "name": "DONOR UNIT Luxury Straight Wig",
+      "price": 135,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266050802-ma6794.jpg",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 135,
+          "image": "/uploads/1790266051095-yzvaa2.jpg"
+        }
+      ],
+      "tags": [
+        "donor-unit"
+      ]
+    },
+    {
+      "id": "petite-luxe-single-donor-unit",
+      "name": "Petite Luxe – Single Donor Unit",
+      "price": 250,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266051652-1ivxpq.jpg",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 250,
+          "image": "/uploads/1790266052038-052zmb.jpg"
+        }
+      ],
+      "tags": [
+        "donor-unit"
+      ]
+    },
+    {
+      "id": "lace-closures",
+      "name": "Lace closures",
+      "price": 120,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "straight",
+      "category": "closures",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266054472-sda1oa.png",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 120,
+          "image": "/uploads/1790266055975-g1isfo.png"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "id": "lace-mousse",
+      "name": "Lace Mousse",
+      "price": 0,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "straight",
+      "category": "care",
+      "rating": 5,
+      "description": "Placeholder — this item showed a variable/POA price on the live site; confirm price and description with IBCOCO.",
+      "image": "/uploads/1790266057761-7ng3jf.png",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 0,
+          "image": "/uploads/1790266059251-18mxb1.png"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "id": "mimi-luxe-12-mexican-unit-with-hd-5x5-closure",
+      "name": "Mimi Luxe – 12”Mexican Unit with HD 5x5 Closure",
+      "price": 270,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "straight",
+      "category": "closures",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266059571-d8anho.jpg",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 270,
+          "image": "/uploads/1790266059938-etlgme.jpg"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "id": "mila-luxe-14-south-asian-donor-hd-unit",
+      "name": "Mila Luxe – 14” South Asian Donor HD Unit",
+      "price": 300,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266060335-sbz2iu.jpg",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 300,
+          "image": "/uploads/1790266060552-b6sicy.jpg"
+        }
+      ],
+      "tags": [
+        "donor-unit",
+        "bestseller"
+      ]
+    },
+    {
+      "id": "asantewaa-luxe-16-premium-unit",
+      "name": "Asantewaa Luxe – 16” Premium Unit",
+      "price": 265,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266060785-lqyxb8.jpg",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 265,
+          "image": "/uploads/1790266060977-r5fg5g.jpg"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "id": "gigi-fringe-12-jet-black-wig",
+      "name": "Gigi Fringe – 12” Jet Black Wig",
+      "price": 200,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "straight",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266061390-nug5eo.jpg",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 200,
+          "image": "/uploads/1790266061902-x3kjge.jpg"
+        }
+      ],
+      "tags": [
+        "fringe"
+      ]
+    },
+    {
+      "id": "mimi-mexican-curly-wig",
+      "name": "Mimi Mexican Curly Wig",
+      "price": 190,
+      "oldPrice": null,
+      "badge": null,
+      "texture": "curly",
+      "category": "wigs",
+      "rating": 5,
+      "description": "Placeholder — pull the real product description from jeyharlem.com before launch.",
+      "image": "/uploads/1790266062446-0rzwng.jpg",
+      "variants": [
+        {
+          "id": "v1",
+          "length": "",
+          "color": "",
+          "density": "",
+          "price": 190,
+          "image": "/uploads/1790266062903-llix8g.jpg"
+        }
+      ],
+      "tags": []
+    }
+  ],
+  "newsletter": [],
+  "appointments": [],
+  "orders": [],
+  "messages": [],
+  "settings": {
+    "bankTransfer": {
+      "enabled": false,
+      "instructions": ""
+    },
+    "categoryImages": {
+      "new": "/uploads/1790265891390-v63qmw.jpeg",
+      "wigs": "/uploads/1790265901815-8eb1vo.jpeg",
+      "closures": "/uploads/1790265918649-mvnclr.jpeg",
+      "bundles": "/uploads/1790265922794-2ex05l.jpeg",
+      "care": "/uploads/1790265928824-wx6n35.png",
+      "donor-unit": "/uploads/1790265938033-069dqv.jpeg",
+      "bob": "/uploads/1790265958841-lhri54.jpeg",
+      "fringe": "/uploads/1790265945692-mnjfii.jpeg"
+    },
+    "heroImages": [
+      "",
+      "",
+      ""
+    ],
+    "logo": "/uploads/1790268968839-68moic.png",
+    "siteImages": {
+      "homeAtelier": "/uploads/1790268914202-ud5m0c.jpeg",
+      "contactAtelier": "/uploads/1790268921493-ci4d60.png",
+      "aboutPortrait": "/uploads/1790268929550-evmyqj.png",
+      "careGuideStyling": "/uploads/1790268941854-9w7ns2.jpeg",
+      "careGuideStoring": "/uploads/1790268949595-n7p29o.png"
+    },
+    "ticker": [
+      "Worldwide Shipping",
+      "100% Raw Human Hair",
+      "Book Your Luxury Install",
+      "London Atelier"
+    ]
+  },
+  "users": []
+}
