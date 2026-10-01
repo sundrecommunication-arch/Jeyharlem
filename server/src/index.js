@@ -10,6 +10,7 @@ import Stripe from 'stripe';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import multer from 'multer';
+import XLSX from 'xlsx';
 import { mkdirSync } from 'fs';
 import { sendEmail, sendEmailAsync } from './lib/email.js';
 import { orderStatusEmail, appointmentStatusEmail, appointmentReceivedEmail, newsletterThankYouEmail, contactReceivedEmail } from './lib/emailTemplates.js';
@@ -53,6 +54,16 @@ const uploadVideo = multer({
   }),
   limits: { fileSize: 80 * 1024 * 1024 },
   fileFilter: (req, file, cb) => cb(/^video\//.test(file.mimetype) ? null : new Error('Only video files are allowed'), /^video\//.test(file.mimetype))
+});
+// Bulk product upload (.xlsx template) — kept in memory, not written to disk, since it's parsed
+// once and discarded. 5MB is generous for a product spreadsheet (even a few thousand rows).
+const uploadSheet = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    const ok = /\.(xlsx|xls|csv)$/i.test(file.originalname || '');
+    cb(ok ? null : new Error('Please upload the .xlsx template file'), ok);
+  }
 });
 function isExternalUrl(u) {
   return typeof u === 'string' && /^https?:\/\//i.test(u);
@@ -148,6 +159,10 @@ function id() {
 function slugify(s) {
   return String(s).toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 }
+// Keep these in sync with client/src/data/content.js — categories (filter: 'category') and
+// textures. Used to validate rows in the bulk product upload sheet.
+const VALID_CATEGORIES = ['wigs', 'closures', 'bundles', 'care'];
+const VALID_TEXTURES = ['straight', 'wavy', 'curly'];
 function admin(req, res, next) {
   if (!process.env.ADMIN_KEY || req.headers['x-admin-key'] !== process.env.ADMIN_KEY) return res.status(401).json({ error: 'Unauthorized' });
   next();
@@ -478,6 +493,119 @@ app.delete('/api/admin/products/:id', admin, async (req, res) => {
   db.products.splice(idx, 1);
   await write(db);
   res.json({ message: 'Product deleted' });
+});
+
+// ---- Admin: bulk product upload (.xlsx) ----
+// Downloads a ready-to-fill .xlsx template matching the columns the bulk-upload route below
+// expects, plus an Instructions sheet. Generated on the fly so it can never drift from the
+// columns actually read by POST /api/admin/products/bulk-upload.
+app.get('/api/admin/products/bulk-template', admin, (req, res) => {
+  const header = ['id', 'name', 'price', 'oldPrice', 'badge', 'texture', 'category', 'description', 'image', 'tags'];
+  const example = ['', 'The Adaeze Bob Wig', 245, '', 'Bestseller', 'straight', 'wigs', 'A polished luxury bob with a sleek finish and natural movement.', 'https://example.com/photo.jpg', 'new,bestseller'];
+  const wb = XLSX.utils.book_new();
+  const ws = XLSX.utils.aoa_to_sheet([header, example]);
+  ws['!cols'] = [{ wch: 16 }, { wch: 30 }, { wch: 8 }, { wch: 9 }, { wch: 14 }, { wch: 10 }, { wch: 10 }, { wch: 45 }, { wch: 32 }, { wch: 22 }];
+  XLSX.utils.book_append_sheet(wb, ws, 'Products');
+  const notes = [
+    ['How to use this template'],
+    [''],
+    ['Leave "id" blank to add a brand-new product — an id is generated from the name automatically.'],
+    ['To UPDATE an existing product instead, put its exact product id in the "id" column.'],
+    [''],
+    ['Required: name, price, texture, category'],
+    [`texture must be one of: ${VALID_TEXTURES.join(', ')}`],
+    [`category must be one of: ${VALID_CATEGORIES.join(', ')}`],
+    ['tags is optional and comma-separated, e.g. new,bestseller,donor-unit,bob,fringe'],
+    ['image is optional — paste a hosted photo URL, or leave blank and add photos per product afterwards in the admin panel'],
+    [''],
+    ['Variant options (length/color/density/price) are not covered by this sheet — add variants per product in the admin panel after uploading.'],
+    ['Delete the example row before uploading, or leave it — a row with no name is skipped.']
+  ];
+  const ws2 = XLSX.utils.aoa_to_sheet(notes);
+  ws2['!cols'] = [{ wch: 95 }];
+  XLSX.utils.book_append_sheet(wb, ws2, 'Instructions');
+  const buf = XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' });
+  res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+  res.setHeader('Content-Disposition', 'attachment; filename="ibcoco-product-upload-template.xlsx"');
+  res.send(buf);
+});
+// Accepts a filled-in copy of the template above and creates/updates products from it in one
+// batch. Rows with a problem are skipped (with a reason) rather than failing the whole upload.
+app.post('/api/admin/products/bulk-upload', admin, (req, res) => {
+  uploadSheet.single('file')(req, res, async (err) => {
+    if (err) return res.status(400).json({ error: err.message || 'Upload failed' });
+    if (!req.file) return res.status(400).json({ error: 'No file received' });
+    let rows;
+    try {
+      const wb = XLSX.read(req.file.buffer, { type: 'buffer' });
+      const sheet = wb.Sheets[wb.SheetNames[0]];
+      rows = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+    } catch {
+      return res.status(400).json({ error: 'Could not read that file — make sure it is the .xlsx template, unedited in structure.' });
+    }
+    const db = await read();
+    let created = 0;
+    let updated = 0;
+    const skipped = [];
+    for (let i = 0; i < rows.length; i++) {
+      const row = rows[i];
+      const rowNum = i + 2; // header is row 1 in the sheet
+      const existingId = String(row.id || '').trim();
+      const name = String(row.name || '').trim();
+      if (!name && !existingId) continue; // blank row — ignore silently
+      if (!name) { skipped.push({ row: rowNum, reason: 'Missing name' }); continue; }
+      const price = Number(row.price);
+      if (!Number.isFinite(price) || price <= 0) { skipped.push({ row: rowNum, reason: 'Missing or invalid price' }); continue; }
+      const texture = String(row.texture || '').trim().toLowerCase();
+      if (!VALID_TEXTURES.includes(texture)) { skipped.push({ row: rowNum, reason: `texture must be one of: ${VALID_TEXTURES.join(', ')}` }); continue; }
+      const category = String(row.category || '').trim().toLowerCase();
+      if (!VALID_CATEGORIES.includes(category)) { skipped.push({ row: rowNum, reason: `category must be one of: ${VALID_CATEGORIES.join(', ')}` }); continue; }
+      let product = null;
+      if (existingId) {
+        product = db.products.find((p) => p.id === existingId);
+        if (!product) { skipped.push({ row: rowNum, reason: `No existing product with id "${existingId}"` }); continue; }
+      }
+      const oldPriceNum = Number(row.oldPrice);
+      const tags = String(row.tags || '').split(',').map((t) => t.trim().toLowerCase()).filter(Boolean);
+      const badge = String(row.badge || '').trim();
+      const description = String(row.description || '').trim();
+      const image = String(row.image || '').trim();
+      if (product) {
+        product.name = name;
+        product.price = price;
+        product.oldPrice = row.oldPrice !== '' && Number.isFinite(oldPriceNum) ? oldPriceNum : null;
+        product.badge = badge;
+        product.texture = texture;
+        product.category = category;
+        product.description = description;
+        if (image) product.image = image;
+        if (tags.length) product.tags = tags;
+        updated++;
+      } else {
+        let base = slugify(name) || 'product';
+        let slug = base;
+        let n = 2;
+        while (db.products.some((p) => p.id === slug)) slug = `${base}-${n++}`;
+        db.products.push({
+          id: slug,
+          name,
+          price,
+          oldPrice: row.oldPrice !== '' && Number.isFinite(oldPriceNum) ? oldPriceNum : null,
+          badge,
+          texture,
+          category,
+          rating: 5,
+          description,
+          image,
+          variants: [],
+          tags
+        });
+        created++;
+      }
+    }
+    if (created || updated) await write(db);
+    res.json({ created, updated, skipped });
+  });
 });
 
 // ---- Admin: settings (bank transfer acceptance shown on the storefront) ----

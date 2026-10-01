@@ -35,7 +35,8 @@ export default function AdminNewsletter() {
       ) : rows.length === 0 ? (
         <p>No subscribers yet.</p>
       ) : (
-        <table className="admin-table">
+        <div className="admin-table-wrap">
+        <table className="admin-table mobile-cards">
           <thead>
             <tr>
               <th>Email</th>
@@ -45,12 +46,13 @@ export default function AdminNewsletter() {
           <tbody>
             {rows.map((r) => (
               <tr key={r.id}>
-                <td>{r.email}</td>
-                <td>{new Date(r.createdAt).toLocaleString('en-GB')}</td>
+                <td data-label="Email">{r.email}</td>
+                <td data-label="Subscribed">{new Date(r.createdAt).toLocaleString('en-GB')}</td>
               </tr>
             ))}
           </tbody>
         </table>
+        </div>
       )}
     </div>
   );

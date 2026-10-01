@@ -68,7 +68,8 @@ export default function AdminOrders() {
       ) : orders.length === 0 ? (
         <p>No orders yet.</p>
       ) : (
-        <table className="admin-table">
+        <div className="admin-table-wrap">
+        <table className="admin-table mobile-cards">
           <thead>
             <tr>
               <th>Order</th>
@@ -83,17 +84,18 @@ export default function AdminOrders() {
           <tbody>
             {orders.map((o) => (
               <tr key={o.id}>
-                <td>{o.id}</td>
-                <td>{o.customer?.name}<br /><span className="admin-muted">{o.customer?.email}</span></td>
-                <td>{o.items?.map((it) => `${it.qty}× ${it.name || it.productId}`).join(', ')}</td>
-                <td>{money(o.total)}</td>
-                <td><span className={`admin-badge admin-badge-${o.status}`}>{ORDER_LABELS[o.status] || o.status}</span></td>
-                <td>{new Date(o.createdAt).toLocaleString('en-GB')}</td>
-                <td><StatusUpdater order={o} onUpdated={handleUpdated} /></td>
+                <td data-label="Order">{o.id}</td>
+                <td data-label="Customer">{o.customer?.name}<br /><span className="admin-muted">{o.customer?.email}</span></td>
+                <td data-label="Items">{o.items?.map((it) => `${it.qty}× ${it.name || it.productId}`).join(', ')}</td>
+                <td data-label="Total">{money(o.total)}</td>
+                <td data-label="Status"><span className={`admin-badge admin-badge-${o.status}`}>{ORDER_LABELS[o.status] || o.status}</span></td>
+                <td data-label="Placed">{new Date(o.createdAt).toLocaleString('en-GB')}</td>
+                <td data-label="Update Status"><StatusUpdater order={o} onUpdated={handleUpdated} /></td>
               </tr>
             ))}
           </tbody>
         </table>
+        </div>
       )}
     </div>
   );

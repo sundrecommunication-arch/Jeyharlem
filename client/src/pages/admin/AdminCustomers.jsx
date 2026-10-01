@@ -23,7 +23,8 @@ export default function AdminCustomers() {
       ) : rows.length === 0 ? (
         <p>No registered accounts yet — customers can still check out as guests.</p>
       ) : (
-        <table className="admin-table">
+        <div className="admin-table-wrap">
+        <table className="admin-table mobile-cards">
           <thead>
             <tr>
               <th>Name</th>
@@ -34,13 +35,14 @@ export default function AdminCustomers() {
           <tbody>
             {rows.map((c) => (
               <tr key={c.id}>
-                <td>{c.name}</td>
-                <td>{c.email}</td>
-                <td>{new Date(c.createdAt).toLocaleDateString('en-GB')}</td>
+                <td data-label="Name">{c.name}</td>
+                <td data-label="Email">{c.email}</td>
+                <td data-label="Joined">{new Date(c.createdAt).toLocaleDateString('en-GB')}</td>
               </tr>
             ))}
           </tbody>
         </table>
+        </div>
       )}
     </div>
   );

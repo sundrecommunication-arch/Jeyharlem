@@ -84,7 +84,51 @@ export function AdminProvider({ children }) {
     [key, logout]
   );
 
-  return <AdminContext.Provider value={{ authed: !!key, login, logout, adminApi, adminUpload, adminUploadVideo }}>{children}</AdminContext.Provider>;
+  // Downloads the bulk product-upload .xlsx template and saves it via the browser's normal
+  // file-download flow. Not routed through adminApi() — the response body is a binary
+  // spreadsheet, not JSON.
+  const adminDownloadTemplate = useCallback(() => {
+    return fetch('/api/admin/products/bulk-template', { headers: { 'x-admin-key': key } }).then(async (r) => {
+      if (r.status === 401) {
+        logout();
+        throw new Error('Your admin session expired — please log in again.');
+      }
+      if (!r.ok) throw new Error('Could not download the template.');
+      const blob = await r.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'ibcoco-product-upload-template.xlsx';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+  }, [key, logout]);
+
+  // Uploads a filled-in copy of that template; resolves to { created, updated, skipped }.
+  const adminBulkUploadProducts = useCallback(
+    (file) => {
+      const body = new FormData();
+      body.append('file', file);
+      return fetch('/api/admin/products/bulk-upload', { method: 'POST', headers: { 'x-admin-key': key }, body }).then(async (r) => {
+        const d = await r.json().catch(() => ({}));
+        if (r.status === 401) {
+          logout();
+          throw new Error('Your admin session expired — please log in again.');
+        }
+        if (!r.ok) throw new Error(d.error || 'Upload failed');
+        return d;
+      });
+    },
+    [key, logout]
+  );
+
+  return (
+    <AdminContext.Provider value={{ authed: !!key, login, logout, adminApi, adminUpload, adminUploadVideo, adminDownloadTemplate, adminBulkUploadProducts }}>
+      {children}
+    </AdminContext.Provider>
+  );
 }
 
 export const useAdmin = () => useContext(AdminContext);

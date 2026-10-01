@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { Search, UserRound, ShoppingBag, Menu, X } from 'lucide-react';
 import { useCart } from '../context/CartContext.jsx';
@@ -18,6 +18,11 @@ export default function Header() {
   const { logo } = useSettings();
   const navigate = useNavigate();
   const closeMobile = () => setMobile(false);
+
+  useEffect(() => {
+    document.body.style.overflow = mobile ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [mobile]);
 
   const submitSearch = (e) => {
     e.preventDefault();
@@ -66,22 +71,33 @@ export default function Header() {
         </div>
       </div>
       {mobile && (
-        <div className="mobile-nav">
-          <nav>
-            <ul>
-              <li><NavLink to="/shop" className={navClass} onClick={closeMobile}>Shop All</NavLink></li>
-              <li><NavLink to="/shop?category=wigs" className={navClass} onClick={closeMobile}>Wigs</NavLink></li>
-              <li><NavLink to="/shop?category=closures" className={navClass} onClick={closeMobile}>Lace Fronts</NavLink></li>
-              <li><NavLink to="/shop?category=bundles" className={navClass} onClick={closeMobile}>Bundles</NavLink></li>
-              <li><NavLink to="/shop?category=care" className={navClass} onClick={closeMobile}>Hair Products</NavLink></li>
-            </ul>
-            <ul className="mobile-nav-secondary">
-              <li><NavLink to="/about" className={navClass} onClick={closeMobile}>Our Story</NavLink></li>
-              <li><NavLink to="/faqs" className={navClass} onClick={closeMobile}>FAQs</NavLink></li>
-              <li><NavLink to="/contact" className={navClass} onClick={closeMobile}>Contact</NavLink></li>
-            </ul>
-          </nav>
-        </div>
+        <>
+          <div className="mobile-nav-backdrop" onClick={closeMobile} />
+          <div className="mobile-nav">
+            <button className="mobile-nav-close" aria-label="Close menu" onClick={closeMobile}><X /></button>
+            <div className="mobile-nav-brand">
+              {logo ? <img src={logo} alt="IBCOCO Quality Hairs" /> : <span className="logo-word">IBCOCO<span className="logo-sub">Quality Hairs</span></span>}
+            </div>
+            <nav>
+              <ul>
+                <li><NavLink to="/shop" className={navClass} onClick={closeMobile}>Shop All</NavLink></li>
+                <li><NavLink to="/shop?category=wigs" className={navClass} onClick={closeMobile}>Wigs</NavLink></li>
+                <li><NavLink to="/shop?category=closures" className={navClass} onClick={closeMobile}>Lace Fronts</NavLink></li>
+                <li><NavLink to="/shop?category=bundles" className={navClass} onClick={closeMobile}>Bundles</NavLink></li>
+                <li><NavLink to="/shop?category=care" className={navClass} onClick={closeMobile}>Hair Products</NavLink></li>
+              </ul>
+              <ul className="mobile-nav-secondary">
+                <li><NavLink to="/about" className={navClass} onClick={closeMobile}>Our Story</NavLink></li>
+                <li><NavLink to="/faqs" className={navClass} onClick={closeMobile}>FAQs</NavLink></li>
+                <li><NavLink to="/contact" className={navClass} onClick={closeMobile}>Contact</NavLink></li>
+              </ul>
+            </nav>
+            <div className="mobile-nav-icons">
+              <Link to={user ? '/account' : '/login'} onClick={closeMobile}><UserRound /><span>{user ? 'My Account' : 'Sign In'}</span></Link>
+              <button onClick={() => { setCartOpen(true); closeMobile(); }}><ShoppingBag /><span>Bag ({count})</span></button>
+            </div>
+          </div>
+        </>
       )}
 
       {searchOpen && (

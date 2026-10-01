@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useAdmin } from '../../context/AdminContext.jsx';
+import { useToast } from '../../context/ToastContext.jsx';
 import { money } from '../../lib/format.js';
 import { categories, textures } from '../../data/content.js';
 import ImageUploadField from '../../components/admin/ImageUploadField.jsx';
@@ -48,13 +49,17 @@ function VariantImageCell({ value, onChange, adminUpload }) {
 }
 
 export default function AdminProducts() {
-  const { adminApi, adminUpload } = useAdmin();
+  const { adminApi, adminUpload, adminDownloadTemplate, adminBulkUploadProducts } = useAdmin();
+  const showToast = useToast();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [editingId, setEditingId] = useState(null); // null = not editing, 'new' = creating, else product id
   const [form, setForm] = useState(BLANK);
   const [saving, setSaving] = useState(false);
+  const [bulkBusy, setBulkBusy] = useState(false);
+  const [bulkResult, setBulkResult] = useState(null);
+  const bulkFileRef = useRef(null);
 
   const load = () =>
     adminApi('/api/admin/products/all')
@@ -140,15 +145,62 @@ export default function AdminProducts() {
     }
   };
 
+  const downloadTemplate = async () => {
+    setError('');
+    try {
+      await adminDownloadTemplate();
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleBulkFile = async (e) => {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (!file) return;
+    setBulkBusy(true);
+    setBulkResult(null);
+    setError('');
+    try {
+      const result = await adminBulkUploadProducts(file);
+      setBulkResult(result);
+      showToast(`Bulk upload: ${result.created} added, ${result.updated} updated${result.skipped.length ? `, ${result.skipped.length} skipped` : ''}.`);
+      if (result.created || result.updated) await load();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setBulkBusy(false);
+    }
+  };
+
   return (
     <div>
       <div className="admin-header-row">
         <h1>Products</h1>
         {editingId === null && (
-          <button className="btn gold" onClick={startNew}>+ Add Product</button>
+          <div className="admin-header-actions">
+            <button className="btn ghost small" type="button" onClick={downloadTemplate}>Download Upload Template</button>
+            <input type="file" accept=".xlsx,.xls,.csv" ref={bulkFileRef} onChange={handleBulkFile} hidden />
+            <button className="btn ghost small" type="button" onClick={() => bulkFileRef.current?.click()} disabled={bulkBusy}>
+              {bulkBusy ? 'Uploading…' : 'Bulk Upload'}
+            </button>
+            <button className="btn gold" onClick={startNew}>+ Add Product</button>
+          </div>
         )}
       </div>
+      <p className="admin-hint">Bulk-add or update many products at once: download the template, fill in a row per product, then upload it back here. Variants and extra photos are still added per-product afterwards.</p>
       {error && <div className="admin-error">{error}</div>}
+      {bulkResult && bulkResult.skipped.length > 0 && (
+        <div className="admin-panel admin-bulk-report">
+          <h3>Bulk upload: {bulkResult.created} added, {bulkResult.updated} updated, {bulkResult.skipped.length} skipped</h3>
+          <ul>
+            {bulkResult.skipped.map((s, i) => (
+              <li key={i}>Row {s.row}: {s.reason}</li>
+            ))}
+          </ul>
+          <button className="btn ghost small" type="button" onClick={() => setBulkResult(null)}>Dismiss</button>
+        </div>
+      )}
 
       {editingId !== null && (
         <form className="admin-panel admin-form" onSubmit={save}>
@@ -251,7 +303,8 @@ export default function AdminProducts() {
       {loading ? (
         <p>Loading products…</p>
       ) : (
-        <table className="admin-table">
+        <div className="admin-table-wrap">
+        <table className="admin-table mobile-cards">
           <thead>
             <tr>
               <th>Photo</th>
@@ -266,13 +319,13 @@ export default function AdminProducts() {
           <tbody>
             {products.map((p) => (
               <tr key={p.id}>
-                <td>{p.image ? <img className="admin-thumb" src={p.image} alt={p.name} /> : <span className="admin-thumb admin-thumb-empty">No photo</span>}</td>
-                <td>{p.name}</td>
-                <td>{categories.find((c) => c.key === p.category)?.label || p.category}</td>
-                <td>{textures[p.texture]?.title || p.texture}</td>
-                <td>{priceRangeText(p)}{p.oldPrice ? <span className="admin-was"> (was {money(p.oldPrice)})</span> : ''}</td>
-                <td>{p.variants?.length ? `${p.variants.length} variants` : '—'}</td>
-                <td className="admin-row-actions">
+                <td data-label="Photo">{p.image ? <img className="admin-thumb" src={p.image} alt={p.name} /> : <span className="admin-thumb admin-thumb-empty">No photo</span>}</td>
+                <td data-label="Name">{p.name}</td>
+                <td data-label="Category">{categories.find((c) => c.key === p.category)?.label || p.category}</td>
+                <td data-label="Texture">{textures[p.texture]?.title || p.texture}</td>
+                <td data-label="Price">{priceRangeText(p)}{p.oldPrice ? <span className="admin-was"> (was {money(p.oldPrice)})</span> : ''}</td>
+                <td data-label="Variants">{p.variants?.length ? `${p.variants.length} variants` : '—'}</td>
+                <td className="admin-row-actions" data-label="">
                   <button className="btn ghost small" onClick={() => startEdit(p)}>Edit</button>
                   <button className="btn ghost small danger" onClick={() => remove(p)}>Delete</button>
                 </td>
@@ -283,6 +336,7 @@ export default function AdminProducts() {
             )}
           </tbody>
         </table>
+        </div>
       )}
     </div>
   );

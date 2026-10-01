@@ -59,7 +59,8 @@ export default function AdminAppointments() {
       ) : rows.length === 0 ? (
         <p>No appointment requests yet.</p>
       ) : (
-        <table className="admin-table">
+        <div className="admin-table-wrap">
+        <table className="admin-table mobile-cards">
           <thead>
             <tr>
               <th>Client</th>
@@ -73,16 +74,17 @@ export default function AdminAppointments() {
           <tbody>
             {rows.map((a) => (
               <tr key={a.id}>
-                <td>{a.name}<br /><span className="admin-muted">{a.email || 'no email'} · {a.phone}</span></td>
-                <td>{a.service}</td>
-                <td>{a.date} at {a.time}</td>
-                <td>{a.notes || '—'}</td>
-                <td><span className={`admin-badge admin-badge-${a.status}`}>{a.status}</span></td>
-                <td><AppointmentActions appt={a} onUpdated={handleUpdated} /></td>
+                <td data-label="Client">{a.name}<br /><span className="admin-muted">{a.email || 'no email'} · {a.phone}</span></td>
+                <td data-label="Service">{a.service}</td>
+                <td data-label="Requested">{a.date} at {a.time}</td>
+                <td data-label="Notes">{a.notes || '—'}</td>
+                <td data-label="Status"><span className={`admin-badge admin-badge-${a.status}`}>{a.status}</span></td>
+                <td data-label="Respond"><AppointmentActions appt={a} onUpdated={handleUpdated} /></td>
               </tr>
             ))}
           </tbody>
         </table>
+        </div>
       )}
     </div>
   );
